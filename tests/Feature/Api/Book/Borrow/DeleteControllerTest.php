@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Book;
+namespace Tests\Feature\Api\Book\Borrow;
 
 use App\Models\Book;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ReturnControllerTest extends TestCase
+class DeleteControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -29,7 +29,7 @@ class ReturnControllerTest extends TestCase
 
         $user->books()->attach($book);
 
-        $response = $this->getJson('/api/books/' . $book->id . '/return');
+        $response = $this->deleteJson('/api/books/' . $book->id . '/borrow');
         $response->assertStatus(204);
 
         $this->assertTrue($book->users->isEmpty());
@@ -50,7 +50,7 @@ class ReturnControllerTest extends TestCase
             'price' => 1850,
         ]);
 
-        $response = $this->getJson('/api/books/' . $book->id . '/return');
+        $response = $this->deleteJson('/api/books/' . $book->id . '/borrow');
         $response->assertStatus(422);
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('message', 'not_borrowed')
@@ -79,7 +79,7 @@ class ReturnControllerTest extends TestCase
 
         $anotherUser->books()->attach($book);
 
-        $response = $this->getJson('/api/books/' . $book->id . '/return');
+        $response = $this->deleteJson('/api/books/' . $book->id . '/borrow');
         $response->assertStatus(422);
         $response->assertJson(fn (AssertableJson $json) =>
         $json->where('message', 'not_borrowed')
@@ -93,7 +93,7 @@ class ReturnControllerTest extends TestCase
     {
         $this->actingAs(User::factory()->create());
 
-        $response = $this->getJson('/api/books/999/return');
+        $response = $this->deleteJson('/api/books/999/borrow');
         $response->assertStatus(404);
     }
 }

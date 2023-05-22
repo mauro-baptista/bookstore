@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\Book;
+namespace Tests\Feature\Api\Book\Borrow;
 
 use App\Models\Book;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class BorrowControllerTest extends TestCase
+class StoreControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -27,8 +27,8 @@ class BorrowControllerTest extends TestCase
             'price' => 1850,
         ]);
 
-        $response = $this->getJson('/api/books/' . $book->id . '/borrow');
-        $response->assertStatus(204);
+        $response = $this->postJson('/api/books/' . $book->id . '/borrow');
+        $response->assertStatus(201);
 
         $this->assertEquals($book->id, $user->books->first()->id);
     }
@@ -50,7 +50,7 @@ class BorrowControllerTest extends TestCase
 
         $user->books()->attach($book);
 
-        $response = $this->getJson('/api/books/' . $book->id . '/borrow');
+        $response = $this->postJson('/api/books/' . $book->id . '/borrow');
         $response->assertStatus(422);
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('message', 'already_borrowed')
@@ -63,7 +63,7 @@ class BorrowControllerTest extends TestCase
     {
         $this->actingAs(User::factory()->create());
 
-        $response = $this->getJson('/api/books/999/borrow');
+        $response = $this->postJson('/api/books/999/borrow');
         $response->assertStatus(404);
     }
 }

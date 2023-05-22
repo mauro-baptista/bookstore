@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Book;
+namespace App\Http\Controllers\Book\Borrow;
 
 use App\Models\Book;
 use Illuminate\Http\Response;
 
-class ReturnController
+class DeleteController
 {
     public function __invoke(Book $book): Response
     {
