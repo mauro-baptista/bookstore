@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('publisher')->nullable();
             $table->string('author')->nullable();
             $table->string('cover_photo')->nullable();
-            $table->integer('price]')->unsigned();
+            $table->integer('price')->unsigned();
             $table->timestamps();
         });
     }
