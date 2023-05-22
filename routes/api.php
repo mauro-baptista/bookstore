@@ -8,4 +8,6 @@ Route::group([
 ], function () {
     Route::get('/', Book\IndexController::class);
     Route::get('/{book}', Book\ShowController::class);
+    Route::get('/{book}/borrow', Book\BorrowController::class);
+    Route::get('/{book}/return', Book\ReturnController::class);
 });
