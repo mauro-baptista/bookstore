@@ -7,4 +7,5 @@ Route::group([
     'prefix' => 'books/',
 ], function () {
     Route::get('/', Book\IndexController::class);
+    Route::get('/{book}', Book\ShowController::class);
 });
