@@ -13,4 +13,12 @@ Route::group([
 
     Route::post('/{book}/borrow', Book\Borrow\StoreController::class);
     Route::delete('/{book}/borrow', Book\Borrow\DeleteController::class);
+
+    Route::group([
+        'middleware' => ['role:manager'],
+    ], function () {
+        Route::post('/', Book\StoreController::class)->middleware('permission:store book');
+        Route::put('/{book}', Book\UpdateController::class)->middleware('permission:update book');
+        Route::delete('/{book}', Book\DeleteController::class)->middleware('permission:delete book');
+    });
 });
