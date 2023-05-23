@@ -2,14 +2,29 @@
 
 namespace Tests\Feature\Api\Book;
 
-use App\Models\User;
+use App\Models\Book;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ValidationTest extends TestCase
 {
     use RefreshDatabase;
+
+    private Book $book;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->book = Book::factory()->create([
+            'title' => 'Dune Old',
+            'description' => 'Dune description  Old',
+            'publisher' => 'Ace  Old',
+            'author' => 'Frank Herbert  Old',
+            'cover_photo' => 'https://sample.com/dune_old.jpg',
+            'price' => 0,
+        ]);
+    }
 
     public static function rules(): array
     {
@@ -34,7 +49,7 @@ class ValidationTest extends TestCase
      * @dataProvider rules
      * @test
      */
-    public function validation(string $field, mixed $value): void
+    public function store_validation(string $field, mixed $value): void
     {
         $this->actingAsManager();
 
@@ -48,6 +63,39 @@ class ValidationTest extends TestCase
         ], [
             $field => $value,
         ]));
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors([$field]);
+    }
+
+    /**
+     * @dataProvider rules
+     * @test
+     */
+    public function update_validation(string $field, mixed $value): void
+    {
+        $this->actingAsManager();
+
+        $response = $this->putJson('/api/books/' . $this->book->id, array_merge([
+            'title' => 'Dune',
+            'description' => 'Dune description',
+            'publisher' => 'Ace',
+            'author' => 'Frank Herbert',
+            'cover_photo' => 'https://sample.com/dune.jpg',
+            'price' => 2436,
+        ], [
+            $field => $value,
+        ]));
+
+        $this->assertDatabaseHas('books', [
+            'id' => $this->book->id,
+            'title' => 'Dune Old',
+            'description' => 'Dune description  Old',
+            'publisher' => 'Ace  Old',
+            'author' => 'Frank Herbert  Old',
+            'cover_photo' => 'https://sample.com/dune_old.jpg',
+            'price' => 0,
+        ]);
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([$field]);
