@@ -41,7 +41,7 @@ class UpdateControllerTest extends TestCase
     }
 
     /** @test */
-    public function can_store_book(): void
+    public function can_update_book(): void
     {
         $this->actingAsManager();
 

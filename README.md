@@ -88,6 +88,14 @@ On success (Status 200):
 ]
 ```
 
+### DELETE /api/books/{id}
+
+Delete an existing book.
+
+On success (Status 204):
+```
+[]
+```
 
 ### GET /api/books/borrow
 
@@ -119,14 +127,18 @@ On success (Status 200):
 It will borrow the book to the user
 
 On success (Status 201):
-(Empty)
+```
+[]
+```
 
 ### DELETE /api/books/{id}/borrow
 
 It will return the book to from the user
 
 On success (Status 204):
-(Empty)
+```
+[]
+```
 
 ## Tests
 `php ./vendor/bin/phpunit`
