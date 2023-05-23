@@ -14,18 +14,22 @@ On success (Status 200):
 [
   0 => [
     "id" => 1
-    "description" => "I, Robot description"
+    "title" => "I, Robot"
+    "description" => **"I, Robot** description"
     "publisher" => "Spectra"
     "author" => "Isaac Asimov"
-    "cover_photo" => "https://www.moen.info/repellendus-illo-qui-praesentium-ea"
+    "cover_photo" => "https://sample.com/irobot.jpg"
     "price" => 2999
+    "is_available" => true
   ], [
     "id" => 2
+    "title" => "Rendezvous with Rama"
     "description" => "Rendezvous with Rama description"
     "publisher" => "RosettaBooks"
     "author" => "Arthur C. Clarke"
-    "cover_photo" => "http://marks.info/corporis-blanditiis-nobis-ea-aut-sint"
+    "cover_photo" => "https://sample.com/rama.jpg"
     "price" => 1850
+    "is_available" => false
   ]
 ]
 ```
@@ -38,11 +42,13 @@ On success (Status 200):
 ```
 [
     "id" => 1
+    "title" => "I, Robot"
     "description" => "I, Robot description"
     "publisher" => "Spectra"
     "author" => "Isaac Asimov"
-    "cover_photo" => "https://www.moen.info/repellendus-illo-qui-praesentium-ea"
+    "cover_photo" => "https://sample.com/irobot.jpg"
     "price" => 2999
+    "is_available" => true
 ]
 ```
 
@@ -62,11 +68,13 @@ On success (Status 201):
 ```
 [
     "id" => 1
+    "title" => "I, Robot"
     "description" => "I, Robot description"
     "publisher" => "Spectra"
     "author" => "Isaac Asimov"
-    "cover_photo" => "https://www.moen.info/repellendus-illo-qui-praesentium-ea"
+    "cover_photo" => "https://sample.com/irobot.jpg"
     "price" => 2999
+    "is_available" => true
 ]
 ```
 
@@ -80,11 +88,13 @@ On success (Status 200):
 ```
 [
     "id" => 1
+    "title" => "I, Robot"
     "description" => "I, Robot description"
     "publisher" => "Spectra"
     "author" => "Isaac Asimov"
-    "cover_photo" => "https://www.moen.info/repellendus-illo-qui-praesentium-ea"
+    "cover_photo" => "https://sample.com/irobot.jpg"
     "price" => 2999
+    "is_available" => true
 ]
 ```
 
@@ -106,18 +116,22 @@ On success (Status 200):
 [
   0 => [
     "id" => 1
+    "title" => "I, Robot"
     "description" => "I, Robot description"
     "publisher" => "Spectra"
     "author" => "Isaac Asimov"
-    "cover_photo" => "https://www.moen.info/repellendus-illo-qui-praesentium-ea"
+    "cover_photo" => "https://sample.com/irobot.jpg"
     "price" => 2999
+    "is_available" => false
   ], [
     "id" => 2
+    "title" => "Rendezvous with Rama"
     "description" => "Rendezvous with Rama description"
     "publisher" => "RosettaBooks"
     "author" => "Arthur C. Clarke"
-    "cover_photo" => "http://marks.info/corporis-blanditiis-nobis-ea-aut-sint"
+    "cover_photo" => "https://sample.com/rama.jpg"
     "price" => 1850
+    "is_available" => false
   ]
 ]
 ```
