@@ -9,6 +9,8 @@ class IndexController
 {
     public function __invoke(): BookCollection
     {
-        return new BookCollection(Book::all());
+        $books = Book::all();
+
+        return new BookCollection($books);
     }
 }

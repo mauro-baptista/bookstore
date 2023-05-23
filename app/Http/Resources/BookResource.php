@@ -20,6 +20,7 @@ class BookResource extends JsonResource
             'author' => $this->author,
             'cover_photo' => $this->cover_photo,
             'price' => $this->price,
+            'is_available' => $this->isAvailable(),
         ];
     }
 }

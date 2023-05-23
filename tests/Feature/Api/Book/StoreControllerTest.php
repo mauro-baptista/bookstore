@@ -45,6 +45,7 @@ class StoreControllerTest extends TestCase
             ->where('author', 'Frank Herbert')
             ->where('cover_photo', 'https://sample.com/dune.jpg')
             ->where('price', 2436)
+            ->where('is_available', true)
             ->etc()
         );
     }

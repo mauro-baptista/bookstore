@@ -35,8 +35,11 @@ class IndexControllerTest extends TestCase
             'price' => 1850,
         ]);
 
+        $book2->users()->attach(User::factory()->create());
+
         $response = $this->getJson('/api/books');
         $response->assertStatus(200);
+
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('0.id', $book1->id)
                 ->where('0.title', 'I, Robot')
@@ -45,6 +48,7 @@ class IndexControllerTest extends TestCase
                 ->where('0.author', 'Isaac Asimov')
                 ->where('0.cover_photo', 'https://sample.com/i_robot.jpg')
                 ->where('0.price', 2999)
+                ->where('0.is_available', true)
                 ->etc()
         );
 
@@ -56,6 +60,7 @@ class IndexControllerTest extends TestCase
                 ->where('1.author', 'Arthur C. Clarke')
                 ->where('1.cover_photo', 'https://sample.com/rendezvous_with_rama.jpg')
                 ->where('1.price', 1850)
+                ->where('1.is_available', false)
                 ->etc()
         );
     }

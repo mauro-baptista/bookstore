@@ -37,6 +37,7 @@ class ShowControllerTest extends TestCase
                 ->where('author', 'Arthur C. Clarke')
                 ->where('cover_photo', 'https://sample.com/rendezvous_with_rama.jpg')
                 ->where('price', 1850)
+                ->where('is_available', true)
                 ->etc()
             );
     }
