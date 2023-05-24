@@ -7,6 +7,7 @@ The purpose of this API is to provide a simplified and straightforward interface
 - `git clone https://github.com/maurobaptista/bookstore.git`
 - `cd bookstore`
 - `composer install`
+- `cp .env.example .env`
 - `php artisan key:generate`
 - `php artisan admin:seed`
 - `php artisan serve`
@@ -33,6 +34,10 @@ curl -X GET \
 -H "Accepts: application/json" \
 http://127.0.0.1:8000/api/access
 ```
+
+> **Note**
+> When port 8000 is already in use, Laravel will automatically assign a different available port.
+
 ### GET /api/books
 
 Retrieves a JSON array containing all existing books.
