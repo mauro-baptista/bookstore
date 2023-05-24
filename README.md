@@ -1,4 +1,4 @@
-#Bookstore API
+# Bookstore API
 
 The purpose of this API is to provide a simplified and straightforward interface. It follows a minimalist approach without the use of Docker or complex database systems. Instead, it leverages the capabilities offered by the underlying framework.
 
