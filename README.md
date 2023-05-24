@@ -9,6 +9,7 @@ The purpose of this API is to provide a simplified and straightforward interface
 - `composer install`
 - `php artisan key:generate`
 - `php artisan admin:seed`
+- `php artisan serve`
 
 ![Seed Result](seed.png)
 
