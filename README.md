@@ -10,7 +10,7 @@ The purpose of this API is to provide a simplified and straightforward interface
 - `php artisan key:generate`
 - `php artisan admin:seed`
 
-![Seed Result](storage/app/public/git/seed.png)
+![Seed Result](seed.png)
 
 ## Endpoints
 
@@ -84,12 +84,15 @@ On success (Status 200):
 Adds a new book to the collection.
 
 Rules:
-'title' => ['required', 'min:2', 'max:256'],
-'description' => ['nullable', 'min:10', 'max:2048'],
-'publisher' => ['nullable', 'min:2', 'max:256'],
-'author' => ['nullable', 'min:2', 'max:256'],
-'cover_photo' => ['nullable', 'url'],
-'price' => ['required', 'integer', 'min:0', 'max:999999'],
+
+| Field | Required | Validation |
+|---|:---:|---|
+| title | yes | min:2, max:256 |
+| description | no | min:10, max:2048 |
+| publisher | no | min:2, max:256 |
+| author | no | min:2, max:256 |
+| cover_photo | no  | url |
+| price | yes | integer, min:0, max:999999 |
 
 On success (Status 201):
 ```
@@ -109,7 +112,16 @@ On success (Status 201):
 
 Updates the information of an existing book based on its ID.
 
-Rules: Same as described above.
+Rules:
+
+| Field | Required | Validation |
+|---|:---:|---|
+| title | yes | min:2, max:256 |
+| description | no | min:10, max:2048 |
+| publisher | no | min:2, max:256 |
+| author | no | min:2, max:256 |
+| cover_photo | no  | url |
+| price | yes | integer, min:0, max:999999 |
 
 On success (Status 200):
 ```
@@ -182,4 +194,4 @@ On success (Status 204):
 ```
 
 ## Tests
-`php ./vendor/bin/phpunit`
+`php artisan test`
