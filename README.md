@@ -1,13 +1,40 @@
 #Bookstore API
 
+The purpose of this API is to provide a simplified and straightforward interface. It follows a minimalist approach without the use of Docker or complex database systems. Instead, it leverages the capabilities offered by the underlying framework.
+
 ## How to use
-To be done
+
+- `git clone https://github.com/maurobaptista/bookstore.git`
+- `cd bookstore`
+- `composer install`
+- `php artisan key:generate`
+- `php artisan admin:seed`
+
+![Seed Result](storage/app/public/git/seed.png)
 
 ## Endpoints
 
+### GET /api/access
+
+Tests if the provided credentials are correct and valid.
+
+On success (Status 200):
+```
+[
+    'message' => 'success'
+]
+```
+
+Curl:
+```
+curl -X GET \
+-H "Authorization: Bearer YOUR_API_TOKEN" \
+-H "Accepts: application/json" \
+http://127.0.0.1:8000/api/access
+```
 ### GET /api/books
 
-Retrieve a json with all the existing books.
+Retrieves a JSON array containing all existing books.
 
 On success (Status 200):
 ```
@@ -15,7 +42,7 @@ On success (Status 200):
   0 => [
     "id" => 1
     "title" => "I, Robot"
-    "description" => **"I, Robot** description"
+    "description" => "I, Robot** description"
     "publisher" => "Spectra"
     "author" => "Isaac Asimov"
     "cover_photo" => "https://sample.com/irobot.jpg"
@@ -36,7 +63,7 @@ On success (Status 200):
 
 ### GET /api/books/{id}
 
-Retrieve a json with the data of existing book.
+Retrieves the JSON data of an existing book based on its ID.
 
 On success (Status 200):
 ```
@@ -54,7 +81,7 @@ On success (Status 200):
 
 ### POST /api/books
 
-Add a new book.
+Adds a new book to the collection.
 
 Rules:
 'title' => ['required', 'min:2', 'max:256'],
@@ -80,9 +107,9 @@ On success (Status 201):
 
 ### PUT /api/books/{id}
 
-Edit an existing book.
+Updates the information of an existing book based on its ID.
 
-Rules: Same as add a new book
+Rules: Same as described above.
 
 On success (Status 200):
 ```
@@ -100,7 +127,7 @@ On success (Status 200):
 
 ### DELETE /api/books/{id}
 
-Delete an existing book.
+Deletes an existing book from the collection based on its ID.
 
 On success (Status 204):
 ```
@@ -109,7 +136,7 @@ On success (Status 204):
 
 ### GET /api/books/borrow
 
-Retrieve a json with all the borrowed books by the user.
+Retrieves a JSON array containing all the books currently borrowed by the logged user.
 
 On success (Status 200):
 ```
@@ -138,7 +165,7 @@ On success (Status 200):
 
 ### POST /api/books/{id}/borrow
 
-It will borrow the book to the user
+Borrows a book and associates it with the logged user.
 
 On success (Status 201):
 ```
@@ -147,7 +174,7 @@ On success (Status 201):
 
 ### DELETE /api/books/{id}/borrow
 
-It will return the book to from the user
+Borrows a book and associates it with the logged user.
 
 On success (Status 204):
 ```

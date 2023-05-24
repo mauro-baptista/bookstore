@@ -31,13 +31,13 @@ class DeleteControllerTest extends TestCase
     /** @test */
     public function fail_to_delete_book_if_not_manager(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $response = $this->deleteJson('/api/books/' . $this->book->id, [
             //
         ]);
 
-        $response->assertStatus(403);
+        $response->assertForbidden();
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class DeleteControllerTest extends TestCase
 
         $response = $this->deleteJson('/api/books/' . $this->book->id);
 
-        $response->assertStatus(204);
+        $response->assertNoContent();
         $this->assertModelMissing($this->book);
     }
 }

@@ -64,7 +64,7 @@ class ValidationTest extends TestCase
             $field => $value,
         ]));
 
-        $response->assertStatus(422);
+        $response->assertUnprocessable();
         $response->assertJsonValidationErrors([$field]);
     }
 
@@ -97,7 +97,7 @@ class ValidationTest extends TestCase
             'price' => 0,
         ]);
 
-        $response->assertStatus(422);
+        $response->assertUnprocessable();
         $response->assertJsonValidationErrors([$field]);
     }
 }

@@ -15,8 +15,7 @@ class StoreControllerTest extends TestCase
     /** @test */
     public function can_borrow_book(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $book = Book::factory()->create([
             'title' => 'Rendezvous with Rama',
@@ -28,7 +27,7 @@ class StoreControllerTest extends TestCase
         ]);
 
         $response = $this->postJson('/api/books/' . $book->id . '/borrow');
-        $response->assertStatus(201);
+        $response->assertCreated();
 
         $this->assertEquals($book->id, $user->books->first()->id);
     }
@@ -36,8 +35,7 @@ class StoreControllerTest extends TestCase
     /** @test */
     public function cannot_borrow_unavailable_book(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $book = Book::factory()->create([
             'title' => 'Rendezvous with Rama',
@@ -51,7 +49,7 @@ class StoreControllerTest extends TestCase
         $user->books()->attach($book);
 
         $response = $this->postJson('/api/books/' . $book->id . '/borrow');
-        $response->assertStatus(422);
+        $response->assertUnprocessable();
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('message', 'already_borrowed')
                 ->etc()
@@ -64,6 +62,6 @@ class StoreControllerTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $response = $this->postJson('/api/books/999/borrow');
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

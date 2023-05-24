@@ -31,13 +31,13 @@ class UpdateControllerTest extends TestCase
     /** @test */
     public function fail_to_update_book_if_not_manager(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $response = $this->putJson('/api/books/' . $this->book->id, [
             //
         ]);
 
-        $response->assertStatus(403);
+        $response->assertForbidden();
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class UpdateControllerTest extends TestCase
             'price' => 2436,
         ]);
 
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertJson(fn (AssertableJson $json) =>
         $json->where('id', $this->book->id)
             ->where('title', 'Dune')

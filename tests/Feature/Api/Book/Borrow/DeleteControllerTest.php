@@ -15,8 +15,7 @@ class DeleteControllerTest extends TestCase
     /** @test */
     public function can_return_book(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $book = Book::factory()->create([
             'title' => 'Rendezvous with Rama',
@@ -30,7 +29,7 @@ class DeleteControllerTest extends TestCase
         $user->books()->attach($book);
 
         $response = $this->deleteJson('/api/books/' . $book->id . '/borrow');
-        $response->assertStatus(204);
+        $response->assertNoContent();
 
         $this->assertTrue($book->users->isEmpty());
     }
@@ -38,8 +37,7 @@ class DeleteControllerTest extends TestCase
     /** @test */
     public function cannot_return_non_borrowed_book(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->actingAsUser();
 
         $book = Book::factory()->create([
             'title' => 'Rendezvous with Rama',
@@ -51,7 +49,7 @@ class DeleteControllerTest extends TestCase
         ]);
 
         $response = $this->deleteJson('/api/books/' . $book->id . '/borrow');
-        $response->assertStatus(422);
+        $response->assertUnprocessable();
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('message', 'not_borrowed')
                 ->etc()
@@ -63,10 +61,8 @@ class DeleteControllerTest extends TestCase
     /** @test */
     public function cannot_return_book_borrowed_by_other_user(): void
     {
-        $user = User::factory()->create();
+        $this->actingAsUser();
         $anotherUser = User::factory()->create();
-
-        $this->actingAs($user);
 
         $book = Book::factory()->create([
             'title' => 'Rendezvous with Rama',
@@ -80,7 +76,7 @@ class DeleteControllerTest extends TestCase
         $anotherUser->books()->attach($book);
 
         $response = $this->deleteJson('/api/books/' . $book->id . '/borrow');
-        $response->assertStatus(422);
+        $response->assertUnprocessable();
         $response->assertJson(fn (AssertableJson $json) =>
         $json->where('message', 'not_borrowed')
             ->etc()
@@ -91,9 +87,9 @@ class DeleteControllerTest extends TestCase
     /** @test */
     public function book_not_found()
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $response = $this->deleteJson('/api/books/999/borrow');
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AccessController;
 use App\Http\Controllers\Book;
 use Illuminate\Support\Facades\Route;
+
+Route::get('access/', AccessController::class);
 
 Route::group([
     'prefix' => 'books/',

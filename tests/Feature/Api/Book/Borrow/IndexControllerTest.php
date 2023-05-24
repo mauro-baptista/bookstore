@@ -15,8 +15,7 @@ class IndexControllerTest extends TestCase
     /** @test */
     public function can_get_all_borrowed_books(): void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $user = $this->actingAsUser();
 
         $book1 = Book::factory()->create([
             'title' => 'I, Robot',
@@ -39,7 +38,7 @@ class IndexControllerTest extends TestCase
         $user->books()->attach($book1);
 
         $response = $this->getJson('/api/books/borrow');
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('0.id', $book1->id)
                 ->where('0.title', 'I, Robot')

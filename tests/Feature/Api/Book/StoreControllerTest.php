@@ -14,13 +14,13 @@ class StoreControllerTest extends TestCase
     /** @test */
     public function fail_to_store_book_if_not_manager(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $response = $this->postJson('/api/books', [
             //
         ]);
 
-        $response->assertStatus(403);
+        $response->assertForbidden();
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class StoreControllerTest extends TestCase
             'price' => 2436,
         ]);
 
-        $response->assertStatus(201);
+        $response->assertCreated();
         $response->assertJson(fn (AssertableJson $json) =>
         $json->where('title', 'Dune')
             ->where('description', 'Dune description')

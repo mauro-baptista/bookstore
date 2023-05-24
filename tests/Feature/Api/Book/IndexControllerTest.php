@@ -15,7 +15,7 @@ class IndexControllerTest extends TestCase
     /** @test */
     public function can_get_all_books_list(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $book1 = Book::factory()->create([
             'title' => 'I, Robot',
@@ -38,7 +38,7 @@ class IndexControllerTest extends TestCase
         $book2->users()->attach(User::factory()->create());
 
         $response = $this->getJson('/api/books');
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('0.id', $book1->id)

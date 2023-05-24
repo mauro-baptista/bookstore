@@ -15,7 +15,7 @@ class ShowControllerTest extends TestCase
     /** @test */
     public function can_get_book_details(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $book = Book::factory()->create([
             'title' => 'Rendezvous with Rama',
@@ -27,7 +27,7 @@ class ShowControllerTest extends TestCase
         ]);
 
         $response = $this->getJson('/api/books/' . $book->id);
-        $response->assertStatus(200);
+        $response->assertOk();
 
         $response->assertJson(fn (AssertableJson $json) =>
             $json->where('id', $book->id)
@@ -45,9 +45,9 @@ class ShowControllerTest extends TestCase
     /** @test */
     public function book_not_found()
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $response = $this->getJson('/api/books/999');
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 }

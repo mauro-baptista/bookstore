@@ -13,8 +13,7 @@ class SeedCommand extends Command
 
     protected $description = 'Seed database';
 
-    private string $userToken = '';
-    private string $managerToken = '';
+    private array $tokens = [];
 
     public function handle(): int
     {
@@ -35,11 +34,11 @@ class SeedCommand extends Command
         $this->newLine();
         $this->components->info('Users');
 
-        $users = User::with('tokens', 'roles')->get()->map(fn (User $user) => [
+        $users = User::with('roles')->get()->map(fn (User $user) => [
             'name' => $user->name,
             'email' => $user->email,
             'roles' => $user->roles->pluck('name')->join(','),
-            'token' => $user->tokens->first()?->token,
+            'token' => $this->tokens[$user->id],
         ]);
 
         $this->table(['Name', 'Email', 'Roles', 'Token'], $users);
@@ -54,10 +53,10 @@ class SeedCommand extends Command
     {
         [$user, $manager] = User::factory()->times(2)->create();
 
-        $user->createToken('token');
+        $this->tokens[$user->id] = $user->createToken('token')->plainTextToken;
 
         $manager->assignRole('manager');
-        $manager->CreateToken('token');
+        $this->tokens[$manager->id] = $manager->createToken('token')->plainTextToken;
     }
 
     private function seedBorrowings(): void
